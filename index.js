@@ -1,13 +1,16 @@
-const user1 = require("./user");
-const path = require("path");
-const os = require("os");
+const http = require('http');
 
-console.log(user1.name);
+const server = http.createServer((request, response) => {
+    console.log(request.url)
+    const el = "<h1";
+    const el2 = ">hello Nodejs</";
+    const el3 = "h1>"
+    response.write(el+el2+el3);
+    response.end()
+});
 
-user1.sayHello();
-
-console.log(path.basename(__dirname));
-
-console.log(os.hostname());
+server.listen(3000, () => {
+    console.log("server is running")
+});
 
 
