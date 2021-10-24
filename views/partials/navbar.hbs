@@ -1,0 +1,17 @@
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Data Logger</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            {{#if isHome}}
+                <li class="active"><a href="/">Home Page</a></li>
+            {{else}}
+                <li><a href="/">Home Page</a></li>
+            {{/if}}
+            {{#if isDataRender}}
+                <li class="active"><a href="/data">Data</a></li>
+            {{else}}
+                <li><a href="/data">Data</a></li>
+            {{/if}}
+        </ul>
+    </div>
+</nav>
