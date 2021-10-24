@@ -12,6 +12,11 @@
             {{else}}
                 <li><a href="/data">Data</a></li>
             {{/if}}
+            {{#if isDataFiller}}
+                <li class="active"><a href="/filler">Fill</a></li>
+            {{else}}
+                <li><a href="/filler">Fill</a></li>
+            {{/if}}
         </ul>
     </div>
 </nav>

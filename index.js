@@ -1,8 +1,8 @@
 const express = require('express');
-const path = require('path');
 const expHbs = require('express-handlebars');
 const homeRoutes = require('./routes/home');
 const dataRenderRoutes = require('./routes/data-render');
+const dataFillerRoutes = require('./routes/data-filler');
 
 
 const app = express();
@@ -28,8 +28,12 @@ app.set('views', 'views');//folder name with templates
 
 app.use(express.static('public'));//register static folder with styles as static
 
+app.use(express.urlencoded({
+    extended: true
+}));
 app.use('/', homeRoutes);
 app.use('/data', dataRenderRoutes);
+app.use('/filler', dataFillerRoutes);
 
 const PORT = process.env.PORT || 3000;
 
