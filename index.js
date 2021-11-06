@@ -1,68 +1,44 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+const express = require('express');
+const expHbs = require('express-handlebars');
+const homeRoutes = require('./routes/home');
+const dataRenderRoutes = require('./routes/data-render');
+const dataFillerRoutes = require('./routes/data-filler');
 
-const server = http.createServer((request, response) => {
-    if (request.method === 'GET') {
-        response.writeHead(200, {
-            "Content-Type": "text/html"
-        });
-        if (request.url === '/') {
-            fs.readFile(
-                path.join(__dirname, 'views', 'index.html'),
-                'utf-8',
-                (err, content) => {
-                    if (err) {
-                        throw err;
-                    } else {
-                        response.end(content);
-                    }
-                }
-            )
-        } else if (request.url === '/about') {
-            fs.readFile(
-                path.join(__dirname, 'views', 'about.html'),
-                'utf-8',
-                (err, content) => {
-                    if (err) {
-                        throw err;
-                    } else {
-                        response.end(content);
-                    }
-                }
-            )
-        } else if (request.url === '/api/users') {
-            response.writeHead(200, {
-                "Content-Type": "text/json"
-            });
-            const users = [{
-                name: 'jhon',
-                age: 25
-            },{
-                name: 'oleg',
-                age: 29
-            }];
-            response.end(JSON.stringify(users));
-        }
-    } else if (request.method === "POST") {
-        const body = [];
-        request.on('data', data => {
-            body.push(Buffer.from(data));
-        });
-        response.writeHead(200, {
-            "content-type": "text/html"
-        });
-        request.on('end', () => {
-            const message = (body.toString().split('=')[1]);
-            response.end(`
-        <h1>Your Message: ${message}</h1>
-        `)
-        });
-    }
+
+const app = express();
+//analog of server
+// const server = http.createServer((request, response) => {
+//     console.log(request.url)
+//     const el = "<h1";
+//     const el2 = ">hello Nodejs</";
+//     const el3 = "h1>"
+//     response.write(el+el2+el3);
+//     response.end()
+// });
+
+const hbs = expHbs.create({
+    defaultLayout: 'main',
+    extname: 'hbs'
 });
 
-server.listen(3000, () => {
-    console.log("server is running")
+// set hbs module as engine for rendering html data
+app.engine('hbs', hbs.engine);//registration
+app.set('view engine', 'hbs');
+app.set('views', 'views');//folder name with templates
+
+app.use(express.static('public'));//register static folder with styles as static
+
+app.use(express.urlencoded({
+    extended: true
+}));
+app.use('/', homeRoutes);
+app.use('/data', dataRenderRoutes);
+app.use('/filler', dataFillerRoutes);
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log("Server is running on port ", PORT);
 });
 
 
