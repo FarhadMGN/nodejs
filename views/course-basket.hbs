@@ -1,0 +1,27 @@
+<div id="basket">
+{{#if courses.length}}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Count</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{#each courses}}
+            <tr>
+                <td>{{title}}</td>
+                <td>{{count}}</td>
+                <td>
+                    <div class="button btn btn-small js-remove" data-id="{{_id}}">Remove</div>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+    <p><strong>Price:</strong><span class="span price">{{price}}</span></p>
+{{else}}
+    <p>Empty basket</p>
+{{/if}}
+</div>

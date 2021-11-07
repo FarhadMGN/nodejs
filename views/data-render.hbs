@@ -13,9 +13,13 @@
                         <span class="card-title">{{title}}</span>
                         <p class="price">{{price}}</p>
                     </div>
-                    <div class="card-action">
+                    <div class="card-action actions">
                         <a href="/courses/{{_id}}">Open course</a>
                         <a href="/courses/{{_id}}/edit?allow=true">Edit</a>
+                        <form action="/basket/add" method="POST">
+                            <input type="hidden" name="id" value="{{_id}}"/>
+                            <button class="btn btn-primary" type="submit">Buy</button>
+                        </form>
                     </div>
                 </div>
             </div>
