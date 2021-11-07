@@ -41,7 +41,20 @@ router.post('/edit', async (request, response) => {
     }
 });
 
+
+router.post('/remove', async (request, response) => {
+    try {
+        await Course.deleteOne({
+            _id: request.body.id
+        });
+        response.redirect('/courses');
+    } catch (e) {
+        console.log(e)
+    }
+});
+
 router.get('/:id', async (request, response) => {
+    console.log('AAAAAA ID', request.params.id);
     const course = await Course.findById(request.params.id).lean();
     console.log('get', course);
 

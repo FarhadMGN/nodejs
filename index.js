@@ -38,7 +38,9 @@ async function start() {
     try {
         const url = CONNECTION_URL;
         await mongoose.connect(url, {
-            useNewUrlParser: true
+            useNewUrlParser: true,
+            useFindAndModify: false,
+            useUnifiedTopology: true
         });
         app.listen(PORT, () => {
             console.log("Server is running on port ", PORT);
