@@ -1,0 +1,23 @@
+<div class="data-filler">
+    <h1>Edit course {{course.title}}</h1>
+
+    <form action="/courses/edit" method="POST">
+        <div class="input-field">
+            <input name="title" placeholder="Enter some text" id="information" type="text" value="{{course.title}}" class="validate" required>
+            <label for="title">Some Data To DB</label>
+        </div>
+        <div class="input-field">
+            <input name="price" placeholder="Enter Number" id="number" type="number" value="{{course.price}}" class="validate" required>
+            <label for="price">Number For DB</label>
+            <span class="helper-text" data-error="Enter Number" data-success="right"></span>
+        </div>
+        <div class="input-field">
+            <input name="img" placeholder="Enter some text" id="information" type="text" value="{{course.img}}" class="validate" required>
+            <label for="img">img</label>
+        </div>
+        <input name="id" id="id" type="hidden" value="{{course._id}}">
+        <button class="btn btn-primary">Edit Data</button>
+    </form>
+</div>
+
+

@@ -1,0 +1,26 @@
+const {Schema, model} = require('mongoose');
+
+const course = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    img: String
+});
+
+module.exports = model('Course', course);
+
+class Course {
+    constructor(info, num) {
+        this.info = info;
+        this.num = num;
+    }
+
+    save() {
+
+    }
+}

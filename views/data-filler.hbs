@@ -3,13 +3,17 @@
 
     <form action="/filler" method="POST">
         <div class="input-field">
-            <input name="info" placeholder="Enter some text" id="information" type="text" class="validate" required>
+            <input name="title" placeholder="Enter some text" id="information" type="text" class="validate" required>
             <label for="title">Some Data To DB</label>
         </div>
         <div class="input-field">
-            <input name="num" placeholder="Enter Number" id="number" type="number" class="validate" required>
-            <label for="number">Number For DB</label>
+            <input name="price" placeholder="Enter Number" id="number" type="number" class="validate" required>
+            <label for="price">Number For DB</label>
             <span class="helper-text" data-error="Enter Number" data-success="right"></span>
+        </div>
+        <div class="input-field">
+            <input name="img" placeholder="Enter some text" id="information" type="text" class="validate" required>
+            <label for="img">img</label>
         </div>
         <button class="btn btn-primary">Add Data</button>
     </form>

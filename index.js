@@ -1,20 +1,14 @@
+import {CONNECTION_URL} from "./secrets/database";
+
 const express = require('express');
 const expHbs = require('express-handlebars');
 const homeRoutes = require('./routes/home');
 const dataRenderRoutes = require('./routes/data-render');
 const dataFillerRoutes = require('./routes/data-filler');
+const mongoose = require('mongoose');
 
 
 const app = express();
-//analog of server
-// const server = http.createServer((request, response) => {
-//     console.log(request.url)
-//     const el = "<h1";
-//     const el2 = ">hello Nodejs</";
-//     const el3 = "h1>"
-//     response.write(el+el2+el3);
-//     response.end()
-// });
 
 const hbs = expHbs.create({
     defaultLayout: 'main',
@@ -32,13 +26,28 @@ app.use(express.urlencoded({
     extended: true
 }));
 app.use('/', homeRoutes);
-app.use('/data', dataRenderRoutes);
+app.use('/courses', dataRenderRoutes);
 app.use('/filler', dataFillerRoutes);
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-    console.log("Server is running on port ", PORT);
-});
+
+async function start() {
+    try {
+        const url = CONNECTION_URL;
+        await mongoose.connect(url, {
+            useNewUrlParser: true
+        });
+        app.listen(PORT, () => {
+            console.log("Server is running on port ", PORT);
+        });
+    } catch (e) {
+        console.log(e)
+    }
+
+}
+
+start();
+
 
 
