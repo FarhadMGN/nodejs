@@ -14,7 +14,8 @@ router.post('/', async (request, response) => {
     const course = new Course({
         title: request.body.title,
         price: request.body.price,
-        img: request.body.img
+        img: request.body.img,
+        userId: request.user._id,
     });
     // const log = new DataLog(request.body.info, request.body.num);
     console.log(course);

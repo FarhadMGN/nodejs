@@ -3,7 +3,8 @@ const Course = require('../models/Course');
 const router = Router();
 
 router.get('/', async (request, response) => {
-    const courses = await Course.find().lean();
+    const courses = await Course.find().populate('userId').lean();
+    console.log("courses", courses);
     response.render('data-render', {
         title: "Data Render",
         isDataRender: true,
@@ -29,15 +30,21 @@ router.post('/edit', async (request, response) => {
         title: request.body.title,
         price: request.body.price,
         img: request.body.img,
-        _id: request.body.id
     });
     // const log = new DataLog(request.body.info, request.body.num);
     console.log('edit course', course);
     try {
-        await Course.updateOne(course);
+        await Course.updateOne(
+            { _id: request.body.id },
+            {
+                title: request.body.title,
+                price: request.body.price,
+                img: request.body.img,
+            }
+            );
         response.redirect('/courses');
     } catch (e) {
-        console.log(e)
+        console.log("error during update", e)
     }
 });
 

@@ -8,19 +8,24 @@
                 <li><a href="/">Home Page</a></li>
             {{/if}}
             {{#if isDataRender}}
-                <li class="active"><a href="/courses">Data</a></li>
+                <li class="active"><a href="/courses">Courses</a></li>
             {{else}}
-                <li><a href="/courses">Data</a></li>
+                <li><a href="/courses">Courses</a></li>
             {{/if}}
             {{#if isDataFiller}}
-                <li class="active"><a href="/filler">Fill</a></li>
+                <li class="active"><a href="/filler">Add Course</a></li>
             {{else}}
-                <li><a href="/filler">Fill</a></li>
+                <li><a href="/filler">Add Course</a></li>
             {{/if}}
             {{#if isBasket}}
                 <li class="active"><a href="/basket">Basket</a></li>
             {{else}}
                 <li><a href="/basket">Basket</a></li>
+            {{/if}}
+            {{#if isOrders}}
+                <li class="active"><a href="/orders">Orders</a></li>
+            {{else}}
+                <li><a href="/orders">Orders</a></li>
             {{/if}}
         </ul>
     </div>

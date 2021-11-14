@@ -1,27 +1,54 @@
 const {Router} = require('express');
 const router = Router();
-const CardBasket = require('../models/CourseBacket');
+// const CardBasket = require('../models/CourseBacket');
 const Course = require('../models/Course');
+
+function mapCartItems(cart) {
+    return cart.items.map((item) => ({
+        ...item.courseId._doc,
+        count: item.count
+    }));
+}
+
+function computePrice(courses) {
+    return courses.reduce((total, course) => {
+        return total += course.price * course.count
+    }, 0);
+}
+
 
 router.post('/add', async (req, resp) => {
     const course = await Course.findById(req.body.id).lean();
-    await CardBasket.add(course);
+    // await CardBasket.add(course);
+    await req.user.addToCart(course);
     resp.redirect('/basket')
-
 });
 
 router.delete('/remove/:id', async (req, resp) => {
-    const card = await CardBasket.remove(req.params.id);
-    resp.status(200).json(card);
+    await req.user.removeFromCart(req.params.id);
+    const user = await req.user.populate('cart.items.courseId')
+        .execPopulate();
+    const courses = mapCartItems(user.cart);
+    const price = computePrice(courses);
+    const cart = {
+        courses,
+        price
+    };
+
+    resp.status(200).json(cart);
 });
 
 router.get('/', async (req, res) => {
-    const cardBasket = await CardBasket.fetch();
+    const user = await req.user
+        .populate('cart.items.courseId')
+        .execPopulate();
+
+    const courses = mapCartItems(user.cart);
     res.render('course-basket', {
         title: 'Basket',
         isBasket: true,
-        courses: cardBasket.courses,
-        price: cardBasket.price
+        courses: courses,
+        price: computePrice(courses)
     })
 });
 
